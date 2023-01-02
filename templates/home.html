@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for article in pages_obj %}
+<div class="card text-center">
+    <h1>WelcomInNwaarArt</h1>
+    <div class="card-header">
+     <img src="{{article.image.url}}" width="45%">
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{article.titre}}</h5>
+      <p class="card-text">{{article.description}}</p>
+      <a href="{% url 'details' article.id %}" class="btn btn-primary">En savoir plus</a>
+      <a href="{% url 'update' article.id %}" class="btn btn-primary">MODIFIER</a>
+      <a href="{% url 'create' %}" class="btn btn-primary">CREER UNE POST</a>
+    </div>
+    <div class="card-footer text-muted">
+     {{article.date}}
+    </div>
+  </div>
+  {% endfor %}
+<div class="pagination">
+    <span class="step-links">
+        {% if pages_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a  class="btn btn-danger" href="?page={{ pages_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ pages_obj.number }} of {{ pages_obj.paginator.num_pages }}.
+        </span>
+
+        {% if pages_obj.has_next %}
+            <a  class="btn btn-danger" href="?page={{ pages_obj.next_page_number }}">next</a>
+            <a href="?page={{ pages_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}
